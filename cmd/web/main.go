@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-
 	"github.com/Soyaib10/comfort-cocoon/pkg/config"
 	"github.com/Soyaib10/comfort-cocoon/pkg/handlers"
 	"github.com/Soyaib10/comfort-cocoon/pkg/render"
@@ -21,8 +20,14 @@ func main() {
 		log.Fatal("can't create template cache")
 	}
 	app.TemplateCache = tc
-	http.HandleFunc("/", handlers.Home)
-	http.HandleFunc("/about", handlers.About)
+	app.UseCache = false
+
+	repo := handlers.NewRepo(&app)
+	handlers.NewHandlers(repo)
+	render.NewTemplates(&app)
+
+	http.HandleFunc("/", handlers.Repo.Home)
+	http.HandleFunc("/about", handlers.Repo.About)
 
 	fmt.Println(fmt.Sprintf("Starting application on port %v", portNumber))
 	_ = http.ListenAndServe(portNumber, nil) 
