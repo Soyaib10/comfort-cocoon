@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+
 	"github.com/Soyaib10/comfort-cocoon/pkg/config"
 	"github.com/Soyaib10/comfort-cocoon/pkg/render"
 )
@@ -35,4 +36,3 @@ func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, "about.page.tmpl")
 }
-

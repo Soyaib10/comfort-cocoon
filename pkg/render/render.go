@@ -3,11 +3,12 @@ package render
 import (
 	"bytes"
 	"fmt"
-	"github.com/Soyaib10/comfort-cocoon/pkg/config"
 	"html/template"
 	"log"
 	"net/http"
 	"path/filepath"
+
+	"github.com/Soyaib10/comfort-cocoon/pkg/config"
 )
 
 var app *config.AppConfig
