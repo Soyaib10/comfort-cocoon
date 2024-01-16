@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 
 	"github.com/Soyaib10/comfort-cocoon/pkg/config"
+	"github.com/Soyaib10/comfort-cocoon/pkg/models"
 )
 
 var app *config.AppConfig
@@ -20,8 +21,12 @@ func NewTemplates(a *config.AppConfig) {
 	app = a
 }
 
+func AddDefaultData(td *models.TemplateData) (*models.TemplateData) {
+	return td
+}
+
 // RenderTemplate renders templates using html/template
-func RenderTemplate(w http.ResponseWriter, tmpl string) {
+func RenderTemplate(w http.ResponseWriter, tmpl string, td *models.TemplateData) {
 	// get the template cache from the app config
 	var tc map[string]*template.Template
 	if app.UseCache {
@@ -36,7 +41,8 @@ func RenderTemplate(w http.ResponseWriter, tmpl string) {
 	}
 
 	buf := new(bytes.Buffer)
-	_ = t.Execute(buf, nil)
+	td = AddDefaultData(td)
+	_ = t.Execute(buf, td)
 	_, err := buf.WriteTo(w)
 	if err != nil {
 		fmt.Println("Error writing template in browser", err)
@@ -71,6 +77,5 @@ func CreateTemplateCache() (map[string]*template.Template, error) {
 		}
 		myCache[name] = ts
 	}
-	println("i eat rice")
 	return myCache, nil
 }
