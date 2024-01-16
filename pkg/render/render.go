@@ -71,5 +71,6 @@ func CreateTemplateCache() (map[string]*template.Template, error) {
 		}
 		myCache[name] = ts
 	}
+	println("i eat rice")
 	return myCache, nil
 }
