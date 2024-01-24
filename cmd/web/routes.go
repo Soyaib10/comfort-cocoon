@@ -3,8 +3,8 @@ package main
 import (
 	"net/http"
 
-	"github.com/Soyaib10/comfort-cocoon/pkg/config"
-	"github.com/Soyaib10/comfort-cocoon/pkg/handlers"
+	"github.com/Soyaib10/comfort-cocoon/internal/config"
+	"github.com/Soyaib10/comfort-cocoon/internal/handlers"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 )

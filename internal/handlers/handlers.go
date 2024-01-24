@@ -6,9 +6,9 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/Soyaib10/comfort-cocoon/pkg/config"
-	"github.com/Soyaib10/comfort-cocoon/pkg/models"
-	"github.com/Soyaib10/comfort-cocoon/pkg/render"
+	"github.com/Soyaib10/comfort-cocoon/internal/config"
+	"github.com/Soyaib10/comfort-cocoon/internal/models"
+	"github.com/Soyaib10/comfort-cocoon/internal/render"
 )
 
 // Repo the repository used by handlers

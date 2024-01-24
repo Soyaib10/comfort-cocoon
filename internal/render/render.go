@@ -8,8 +8,8 @@ import (
 	"net/http"
 	"path/filepath"
 
-	"github.com/Soyaib10/comfort-cocoon/pkg/config"
-	"github.com/Soyaib10/comfort-cocoon/pkg/models"
+	"github.com/Soyaib10/comfort-cocoon/internal/config"
+	"github.com/Soyaib10/comfort-cocoon/internal/models"
 	"github.com/justinas/nosurf"
 )
 

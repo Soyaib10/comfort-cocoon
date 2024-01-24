@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/Soyaib10/comfort-cocoon/pkg/config"
-	"github.com/Soyaib10/comfort-cocoon/pkg/handlers"
-	"github.com/Soyaib10/comfort-cocoon/pkg/render"
+	"github.com/Soyaib10/comfort-cocoon/internal/config"
+	"github.com/Soyaib10/comfort-cocoon/internal/handlers"
+	"github.com/Soyaib10/comfort-cocoon/internal/render"
 	"github.com/alexedwards/scs/v2"
 )
 
