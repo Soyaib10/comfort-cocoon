@@ -99,7 +99,6 @@ func (m *Repository) AvailabilityJson(w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 	}
 
-	log.Println(string(out))
 	w.Header().Set("content-Type", "application/json")
 	w.Write(out)
 }
