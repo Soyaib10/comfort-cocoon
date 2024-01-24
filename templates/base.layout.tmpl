@@ -80,7 +80,7 @@
     {{end}}
 
 
-   
+
     <footer class="my-footer">
         <div class="row">
             <div class="col">
@@ -113,7 +113,7 @@
 
     <script>
         let attention = Prompt();
-        
+
         (function () {
             'use strict';
             window.addEventListener('load', function () {
@@ -132,7 +132,7 @@
             }, false);
         })();
 
-        
+
 
         const elem = document.getElementById('reservation-dates');
         const rangePicker = new DateRangePicker(elem, {
@@ -226,15 +226,14 @@
                     focusConfirm: false,
                     showCancelButton: true,
                     willOpen: () => {
-                        const elem = document.getElementById("reservation-dates-modal");
-                        const rp = new DateRangePicker(elem, {
-                            format: 'yyyy-mm-dd',
-                            showOnFocus: true,
-                        })
+                        if (c.willOpen != undefined) {
+                            c.willOpen();
+                        }
                     },
                     didOpen: () => {
-                        document.getElementById("start").removeAttribute("disabled");
-                        document.getElementById("end").removeAttribute("disabled");
+                        if (c.didOpen !== undefined) {
+                            c.didOpen();
+                        }
                     },
                     preConfirm: () => {
                         return [
@@ -247,7 +246,7 @@
                     if (result.dismiss !== Swal.DismissReason.cancel) {
                         if (result.value !== "") {
                             if (c.callback !== undefined) {
-                                c.callback(result); 
+                                c.callback(result);
                             }
                         } else {
                             c.callback(false);
