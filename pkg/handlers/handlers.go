@@ -1,7 +1,9 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/Soyaib10/comfort-cocoon/pkg/config"
@@ -32,7 +34,7 @@ func NewHandlers(r *Repository) {
 // Home is the home page handler
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 	// grabbing visitors ip address
-	remoteIP := r.RemoteAddr 
+	remoteIP := r.RemoteAddr
 	m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
 
 	render.RenderTemplate(w, r, "home.page.tmpl", &models.TemplateData{})
@@ -77,8 +79,29 @@ func (m *Repository) Availability(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) PostAvailability(w http.ResponseWriter, r *http.Request) {
 	start := r.Form.Get("start")
 	end := r.Form.Get("end")
-
 	w.Write([]byte(fmt.Sprintf("start date is %s and end date is %s", start, end)))
+}
+
+type jsonResponse struct {
+	OK      bool   `json:"ok"`
+	Message string `json:"message"`
+}
+
+// AvailabilityJson renders the search availability page
+func (m *Repository) AvailabilityJson(w http.ResponseWriter, r *http.Request) {
+	resp := jsonResponse{
+		OK:      true,
+		Message: "Available",
+	}
+
+	out, err := json.MarshalIndent(resp, "", "    ")
+	if err != nil {
+		log.Println(err)
+	}
+
+	log.Println(string(out))
+	w.Header().Set("content-Type", "application/json")
+	w.Write(out)
 }
 
 // Contact renders the search availability page
