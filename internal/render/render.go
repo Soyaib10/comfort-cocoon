@@ -23,7 +23,7 @@ func NewTemplates(a *config.AppConfig) {
 }
 
 // AddDefaultData adds data for all templates
-func AddDefaultData(td *models.TemplateData, r *http.Request) (*models.TemplateData) {
+func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateData {
 	td.CSRFToken = nosurf.Token(r)
 	return td
 }
@@ -45,7 +45,7 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, td *mod
 
 	buf := new(bytes.Buffer)
 	td = AddDefaultData(td, r)
-	_ = t.Execute(buf, td) 
+	_ = t.Execute(buf, td)
 	_, err := buf.WriteTo(w)
 	if err != nil {
 		fmt.Println("Error writing template in browser", err)
