@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/gob"
 	"fmt"
 	"log"
 	"net/http"
@@ -8,6 +9,7 @@ import (
 
 	"github.com/Soyaib10/comfort-cocoon/internal/config"
 	"github.com/Soyaib10/comfort-cocoon/internal/handlers"
+	"github.com/Soyaib10/comfort-cocoon/internal/models"
 	"github.com/Soyaib10/comfort-cocoon/internal/render"
 	"github.com/alexedwards/scs/v2"
 )
@@ -18,6 +20,9 @@ var session *scs.SessionManager
 
 // main is the main application function
 func main() {
+	// putting things in season
+	gob.Register(models.Reservation{})
+	
 	// change this to true when in production
 	app.InProduction = false
 
