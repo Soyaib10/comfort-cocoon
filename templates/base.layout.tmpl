@@ -23,7 +23,7 @@
             border-color: #6c757d;
         }
 
-        /* p {} */
+        p {}
 
         .paraClass {
             font-size: 3em;
@@ -37,9 +37,11 @@
             text-decoration: underline;
         }
     </style>
+
 </head>
 
 <body>
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="#">Navbar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -70,15 +72,14 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/contact">Contact</a>
                 </li>
+
             </ul>
         </div>
     </nav>
-    {{block "content" .}}
-    {{/* -comment- base is from base.page.tmpl */}}
 
+    {{block "content" .}}
 
     {{end}}
-
 
 
     <footer class="my-footer">
@@ -107,6 +108,7 @@
     <script src="https://unpkg.com/notie"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.min.js"></script>
 
+
     {{block "js" .}}
 
     {{end}}
@@ -133,12 +135,6 @@
         })();
 
 
-
-        const elem = document.getElementById('reservation-dates');
-        const rangePicker = new DateRangePicker(elem, {
-            format: "yyyy-mm-dd",
-        });
-
         function notify(msg, msgType) {
             notie.alert({
                 type: msgType,
@@ -154,6 +150,18 @@
                 confirmButtonText: confirmationButtonText
             })
         }
+
+        { { with .Error} }
+        notify("{{.}}", "error");
+        { { end } }
+
+        { { with .Flash} }
+        notify("{{.}}", "success");
+        { { end } }
+
+        { { with .Warning} }
+        notify("{{.}}", "warning");
+        { { end } }
 
         function Prompt() {
             let toast = function (c) {
@@ -226,7 +234,7 @@
                     focusConfirm: false,
                     showCancelButton: true,
                     willOpen: () => {
-                        if (c.willOpen != undefined) {
+                        if (c.willOpen !== undefined) {
                             c.willOpen();
                         }
                     },
@@ -242,6 +250,7 @@
                         ]
                     }
                 })
+
                 if (result) {
                     if (result.dismiss !== Swal.DismissReason.cancel) {
                         if (result.value !== "") {
