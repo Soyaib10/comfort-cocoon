@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/Soyaib10/comfort-cocoon/internal/config"
+	"github.com/Soyaib10/comfort-cocoon/internal/driver"
 	"github.com/Soyaib10/comfort-cocoon/internal/handlers"
 	"github.com/Soyaib10/comfort-cocoon/internal/helpers"
 	"github.com/Soyaib10/comfort-cocoon/internal/models"
@@ -24,34 +25,29 @@ var session *scs.SessionManager
 var infoLog *log.Logger
 var errorLog *log.Logger
 
-// main is the main function
+// main is the main application function
 func main() {
 	db, err := run()
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer db.SQL.Close()
-
-	fmt.Println(fmt.Sprintf("Staring application on port %s", portNumber))
+	_ = db
+	fmt.Println(fmt.Sprintf("Starting application on port %v", portNumber))
 
 	srv := &http.Server{
 		Addr:    portNumber,
 		Handler: routes(&app),
 	}
-
 	err = srv.ListenAndServe()
-	if err != nil {
-		log.Fatal(err)
-	}
+	log.Fatal(err)
 }
 
 func run() (*driver.DB, error) {
-	// what am I going to put in the session
+	dsn := fmt.Sprintf("root:@tcp(localhost:3306)/cocoon")
+	db, err := repoisitory.ConnectionDB(dsn)
+
+	// putting things in season
 	gob.Register(models.Reservation{})
-	gob.Register(models.Restriction{})
-	gob.Register(models.Room{})
-	gob.Register(models.User{})
-	
 
 	// change this to true when in production
 	app.InProduction = false
@@ -62,7 +58,6 @@ func run() (*driver.DB, error) {
 	errorLog = log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
 	app.ErrorLog = errorLog
 
-	// set up the session
 	session = scs.New()
 	session.Lifetime = 24 * time.Hour
 	session.Cookie.Persist = true
@@ -71,27 +66,26 @@ func run() (*driver.DB, error) {
 
 	app.Session = session
 
-	// connect to database
 	log.Println("Connecting to database...")
-	db, err:= driver.ConnectSQL("root:@tcp(localhost:3306)/cocoon")
+	db, err := driver.ConnectSQL("root:@tcp(localhost:3306)/cocoon")
 
-	if err != nil{
+	if err != nil {
 		log.Fatal("Cannot connect to database! Dying...")
 	}
 	log.Println("Connected to Database!")
 
 	tc, err := render.CreateTemplateCache()
-	if err != nil {
-		log.Fatal("cannot create template cache")
-		return nil, err
-	}
 
+	// if err != nil {
+	// 	log.Fatal("can't create template cache")
+	// 	return err
+	// }
 	app.TemplateCache = tc
 	app.UseCache = false
 
 	repo := handlers.NewRepo(&app, db)
 	handlers.NewHandlers(repo)
-	render.NewRenderer(&app)
+	render.NewTemplates(&app)
 	helpers.NewHelpers(&app)
 
 	return db, nil
