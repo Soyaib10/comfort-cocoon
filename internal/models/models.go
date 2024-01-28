@@ -30,7 +30,7 @@ type Restriction struct {
 	UpdatedAt       time.Time
 }
 
-// Reservations is the reservation model
+// Reservation is the reservation model
 type Reservation struct {
 	ID        int
 	FirstName string
@@ -46,7 +46,7 @@ type Reservation struct {
 	Processed int
 }
 
-// RoomRestrictions is the room restriction model
+// RoomRestriction is the room restriction model
 type RoomRestriction struct {
 	ID            int
 	StartDate     time.Time
