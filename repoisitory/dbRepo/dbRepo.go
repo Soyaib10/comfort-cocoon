@@ -4,16 +4,17 @@ import (
 	"database/sql"
 
 	"github.com/Soyaib10/comfort-cocoon/internal/config"
+	"github.com/Soyaib10/comfort-cocoon/internal/repository"
 )
 
-type mySqlDBRepo struct {
-	DB  *sql.DB
+type mysqlDBRepo struct{
 	App *config.AppConfig
+	DB *sql.DB
 }
 
-func NewMySqlDBRepo(db *sql.DB, app *config.AppConfig) *mySqlDBRepo {
-	return &mySqlDBRepo{
-		DB:  db,
-		App: app,
+func NewMysqlRepo(conn *sql.DB, a *config.AppConfig) repository.DatabaseRepo {
+	return &mysqlDBRepo{
+		App: a,
+		DB:  conn,
 	}
 }
