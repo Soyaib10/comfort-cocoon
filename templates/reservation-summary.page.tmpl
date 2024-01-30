@@ -1,18 +1,17 @@
 {{template "base" .}}
 
 {{define "content"}}
-    {{$res := index .Data "reservation"}}
+{{$res := index .Data "reservation"}}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1 class="mt-5">Reservation Summary</h1>
 
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <h1 class="mt-5">Reservation Summary</h1>
+            <hr>
 
-                <hr>
-
-                <table class="table table-striped">
-                    <thead></thead>
-                    <tbody>
+            <table class="table table-striped">
+                <thead></thead>
+                <tbody>
                     <tr>
                         <td>Name:</td>
                         <td>{{$res.FirstName}} {{$res.LastName}}</td>
@@ -37,10 +36,10 @@
                         <td>Phone:</td>
                         <td>{{$res.Phone}}</td>
                     </tr>
-                    </tbody>
-                </table>
+                </tbody>
+            </table>
 
-            </div>
         </div>
     </div>
+</div>
 {{end}}

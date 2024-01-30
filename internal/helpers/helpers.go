@@ -8,7 +8,7 @@ import (
 	"github.com/Soyaib10/comfort-cocoon/internal/config"
 )
 
-var app*config.AppConfig
+var app *config.AppConfig
 
 // NewHelpers sets up app config for helpers
 func NewHelpers(a *config.AppConfig) {

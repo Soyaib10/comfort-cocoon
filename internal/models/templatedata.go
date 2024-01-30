@@ -2,7 +2,7 @@ package models
 
 import "github.com/Soyaib10/comfort-cocoon/internal/forms"
 
-// TemplateData holds data send from handlers to template
+// TemplateData holds data sent from handlers to templates
 type TemplateData struct {
 	StringMap map[string]string
 	IntMap    map[string]int
