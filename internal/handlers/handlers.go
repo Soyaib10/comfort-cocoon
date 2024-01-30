@@ -31,7 +31,7 @@ type Repository struct {
 func NewRepo(a *config.AppConfig, db *driver.DB) *Repository {
 	return &Repository{
 		App: a,
-		DB: dbrepo.NewMySQLRepo(db.SQL, a),
+		DB:  dbrepo.NewMySQLRepo(db.SQL, a),
 	}
 }
 
@@ -88,15 +88,15 @@ func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
 	ed := res.EndDate.Format("2024-01-03")
 
 	stringMap := make(map[string]string)
-	stringMap["start_date"] = sd;
-	stringMap["end_date"] = ed;
+	stringMap["start_date"] = sd
+	stringMap["end_date"] = ed
 
 	data := make(map[string]interface{})
 	data["reservation"] = res
 
 	render.Template(w, r, "make-reservation.page.tmpl", &models.TemplateData{
-		Form: forms.New(nil),
-		Data: data,
+		Form:      forms.New(nil),
+		Data:      data,
 		StringMap: stringMap,
 	})
 }
@@ -140,7 +140,6 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-
 	restriction := models.RoomRestriction{
 		StartDate:     reservation.StartDate,
 		EndDate:       reservation.StartDate,
@@ -157,7 +156,7 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 
 	m.App.Session.Put(r.Context(), "reservation", reservation)
 	http.Redirect(w, r, "/reservaition-summary", http.StatusSeeOther)
-}  
+}
 
 // Generals renders the room page
 func (m *Repository) Generals(w http.ResponseWriter, r *http.Request) {
@@ -211,7 +210,7 @@ func (m *Repository) PostAvailability(w http.ResponseWriter, r *http.Request) {
 
 	res := models.Reservation{
 		StartDate: startDate,
-		EndDate: endDate,
+		EndDate:   endDate,
 	}
 
 	m.App.Session.Put(r.Context(), "reservation", res)
@@ -221,9 +220,13 @@ func (m *Repository) PostAvailability(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+//JSON type structure 
 type jsonResponse struct {
-	OK      bool   `json:"ok"`
-	Message string `json:"message"`
+	OK        bool   `json:"ok"`
+	Message   string `json:"message"`
+	RoomID    string `json:"room_id"`
+	StartDate string `json:"start_date"`
+	EndDate   string `json:"end_date"`
 }
 
 // AvailabilityJson renders the search availability page
@@ -239,8 +242,11 @@ func (m *Repository) AvailabilityJson(w http.ResponseWriter, r *http.Request) {
 	available, _ := m.DB.SearchAvailabilityByDatesByRoomID(startDate, endDate, roomID)
 
 	resp := jsonResponse{
-		OK:      available,
-		Message: "",
+		OK:        available,
+		Message:   "",
+		StartDate: sd,
+		EndDate:   ed,
+		RoomID:    strconv.Itoa(roomID),
 	}
 
 	out, err := json.MarshalIndent(resp, "", "    ")
@@ -278,13 +284,11 @@ func (m *Repository) ReservationSummary(w http.ResponseWriter, r *http.Request) 
 	stringMap["start_date"] = sd
 	stringMap["end_date"] = ed
 
-
 	render.Template(w, r, "reservation-summary.page.tmpl", &models.TemplateData{
-		Data: data,
+		Data:      data,
 		StringMap: stringMap,
 	})
 }
-
 
 func (m *Repository) ChooseRoom(w http.ResponseWriter, r *http.Request) {
 	roomID, err := strconv.Atoi(chi.URLParam(r, "id"))
@@ -296,7 +300,7 @@ func (m *Repository) ChooseRoom(w http.ResponseWriter, r *http.Request) {
 	if !ok {
 		helpers.ServerError(w, err)
 		return
-	} 
+	}
 	res.RoomID = roomID
 	m.App.Session.Put(r.Context(), "reservation", res)
 	http.Redirect(w, r, "/make-reservation", http.StatusSeeOther)
