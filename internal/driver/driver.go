@@ -2,8 +2,9 @@ package driver
 
 import (
 	"database/sql"
-	_ "github.com/go-sql-driver/mysql"
 	"time"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 // DB holds the database connection pool
@@ -17,7 +18,7 @@ const maxOpenDbConn = 10
 const maxIdleDbConn = 5
 const maxDbLifetime = 5 * time.Minute
 
-// ConnectSQL creates database pool for Postgres
+// ConnectSQL creates database pool for Mysql
 func ConnectSQL(dsn string) (*DB, error) {
 	d, err := NewDatabase(dsn)
 	if err != nil {

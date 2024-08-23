@@ -8,19 +8,17 @@ import (
 	"time"
 
 	"github.com/Soyaib10/comfort-cocoon/internal/models"
-	// mail "github.com/xhit/go-simple-mail"
 	mail "github.com/xhit/go-simple-mail/v2"
 )
 
-func listenForMail() {
-	// FIXME: for loop
-	go func() {
-		msg := <-app.MailChan
+func listenForMail(){
+	go func ()  {
+		msg := <- app.MailChan
 		sendMsg(msg)
 	}()
 }
 
-func sendMsg(m models.MailData) {
+func sendMsg(m models.MailData){
 	server := mail.NewSMTPClient()
 	server.Host = "localhost"
 	server.Port = 1025
@@ -29,19 +27,17 @@ func sendMsg(m models.MailData) {
 	server.SendTimeout = 10 * time.Second
 
 	client, err := server.Connect()
-	if err != nil {
+	if err != nil{
 		errorLog.Println(err)
 	}
 
 	email := mail.NewMSG()
 	email.SetFrom(m.From).AddTo(m.To).SetSubject(m.Subject)
-
-	// FIXME: video 2: installing a mailer
-	if m.Template == "" {
+	if m.Template == ""{
 		email.SetBody(mail.TextHTML, m.Content)
-	} else {
+	}else{
 		data, err := ioutil.ReadFile(fmt.Sprintf("./email-templates/%s", m.Template))
-		if err != nil {
+		if err != nil{
 			app.ErrorLog.Println(err)
 		}
 
@@ -52,9 +48,9 @@ func sendMsg(m models.MailData) {
 
 	err = email.Send(client)
 
-	if err != nil {
+	if err != nil{
 		log.Println(err)
 	}
-
+	
 	log.Println("Email sent!")
 }

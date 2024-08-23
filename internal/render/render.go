@@ -8,13 +8,33 @@ import (
 	"log"
 	"net/http"
 	"path/filepath"
+	"time"
 
+	"github.com/justinas/nosurf"
 	"github.com/Soyaib10/comfort-cocoon/internal/config"
 	"github.com/Soyaib10/comfort-cocoon/internal/models"
-	"github.com/justinas/nosurf"
 )
 
-var functions = template.FuncMap{}
+var functions = template.FuncMap{
+	"humanDate":   HumanDate,
+	"formateDate": FormateDate,
+	"iterate":     Iterate,
+	"add":         Add,
+}
+
+// Iterate returns a slice of ints, starting at 1, going to count
+func Iterate(count int) []int {
+	var i int
+	var items []int
+	for i = 0; i < count; i++ {
+		items = append(items, i)
+	}
+	return items
+}
+
+func Add(a, b int) int {
+	return a + b
+}
 
 var app *config.AppConfig
 var pathToTemplates = "./templates"
@@ -24,12 +44,37 @@ func NewRenderer(a *config.AppConfig) {
 	app = a
 }
 
+// HumanDate returns time in YYYY-MM-DD
+func HumanDate(t time.Time) string {
+	return t.Format("2006-01-02")
+}
+
+func FormateDate(t time.Time, f string) string {
+	return t.Format(f)
+}
+
 // AddDefaultData adds data for all templates
 func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateData {
 	td.Flash = app.Session.PopString(r.Context(), "flash")
 	td.Error = app.Session.PopString(r.Context(), "error")
 	td.Warning = app.Session.PopString(r.Context(), "warning")
 	td.CSRFToken = nosurf.Token(r)
+
+	if app.Session.Exists(r.Context(), "user_id") {
+		td.IsAuthenticated = 1
+
+		// add user information to all
+		user := app.Session.Get(r.Context(), "user_information")
+
+		data := make(map[string]interface{})
+
+		data["user_information"] = user
+
+		td.UserInformation = data
+	}
+	if app.Session.Exists(r.Context(), "is_admin") {
+		td.IsAdmin = true
+	}
 	return td
 }
 

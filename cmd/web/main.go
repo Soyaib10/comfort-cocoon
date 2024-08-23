@@ -8,13 +8,14 @@ import (
 	"os"
 	"time"
 
+	"github.com/alexedwards/scs/v2"
+	"github.com/joho/godotenv"
 	"github.com/Soyaib10/comfort-cocoon/internal/config"
 	"github.com/Soyaib10/comfort-cocoon/internal/driver"
 	"github.com/Soyaib10/comfort-cocoon/internal/handlers"
 	"github.com/Soyaib10/comfort-cocoon/internal/helpers"
 	"github.com/Soyaib10/comfort-cocoon/internal/models"
 	"github.com/Soyaib10/comfort-cocoon/internal/render"
-	"github.com/alexedwards/scs/v2"
 )
 
 const portNumber = ":8080"
@@ -37,8 +38,6 @@ func main() {
 	fmt.Println("Starting mail listener...")
 	listenForMail()
 
-	
-
 	fmt.Println(fmt.Sprintf("Starting application on port %s", portNumber))
 
 	srv := &http.Server{
@@ -56,6 +55,7 @@ func run() (*driver.DB, error) {
 	gob.Register(models.User{})
 	gob.Register(models.Room{})
 	gob.Register(models.Restriction{})
+	gob.Register(map[string]int{})
 
 	mailChan := make(chan models.MailData)
 	app.MailChan = mailChan
@@ -79,7 +79,21 @@ func run() (*driver.DB, error) {
 
 	// connect to database
 	log.Println("Connecting to database...")
-	db, err := driver.ConnectSQL("root:@tcp(localhost:3306)/cocoon")
+
+	err := godotenv.Load("./env/mysql.env")
+
+	if err != nil{
+		return nil, err
+	}
+
+	dbRootUsername := os.Getenv("DB_ROOT_USERNAME")
+	dbRootPassword := os.Getenv("DB_ROOT_PASSWORD")
+	dbHost := os.Getenv("DB_HOST")
+	dbName := os.Getenv("DB_NAME")
+	dbPort := os.Getenv("DB_PORT")
+
+	db, err := driver.ConnectSQL(fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", dbRootUsername, dbRootPassword, dbHost, dbPort, dbName))
+	
 	if err != nil {
 		log.Fatal("Cannot connect to database! Dying...")
 	}
