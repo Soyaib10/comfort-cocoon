@@ -16,10 +16,10 @@ import (
 )
 
 var functions = template.FuncMap{
-	"humanDate":   HumanDate,
+	"humanDate": HumanDate,
 	"formateDate": FormateDate,
-	"iterate":     Iterate,
-	"add":         Add,
+	"iterate": Iterate,
+	"add": Add,
 }
 
 // Iterate returns a slice of ints, starting at 1, going to count
@@ -32,7 +32,7 @@ func Iterate(count int) []int {
 	return items
 }
 
-func Add(a, b int) int {
+func Add(a, b int) int{
 	return a + b
 }
 
@@ -45,11 +45,11 @@ func NewRenderer(a *config.AppConfig) {
 }
 
 // HumanDate returns time in YYYY-MM-DD
-func HumanDate(t time.Time) string {
+func HumanDate(t time.Time) string{
 	return t.Format("2006-01-02")
 }
 
-func FormateDate(t time.Time, f string) string {
+func FormateDate(t time.Time, f string) string{
 	return t.Format(f)
 }
 
@@ -60,7 +60,7 @@ func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateDa
 	td.Warning = app.Session.PopString(r.Context(), "warning")
 	td.CSRFToken = nosurf.Token(r)
 
-	if app.Session.Exists(r.Context(), "user_id") {
+	if app.Session.Exists(r.Context(), "user_id"){
 		td.IsAuthenticated = 1
 
 		// add user information to all
@@ -72,7 +72,7 @@ func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateDa
 
 		td.UserInformation = data
 	}
-	if app.Session.Exists(r.Context(), "is_admin") {
+	if app.Session.Exists(r.Context(), "is_admin"){
 		td.IsAdmin = true
 	}
 	return td

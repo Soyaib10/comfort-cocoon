@@ -217,7 +217,7 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 		Template: "basic.html",
 	}
 
-	m.App.MailChan <- msg
+	// m.App.MailChan <- msg
 
 	// send notification to property owner
 	// htmlMessage = fmt.Sprintf(`
@@ -231,7 +231,7 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 	// 	Subject: "Reservation Notification",
 	// 	Content: htmlMessage,
 	// }
-
+	log.Println(msg)
 	// m.App.MailChan <- msg
 
 	m.App.Session.Put(r.Context(), "reservation", reservation)

@@ -1,4 +1,3 @@
 #!/bin/bash
 
-go build -o comfort-cocoon cmd/web/*.go
-./comfort-cocoon
+go build -o bookings cmd/web/*.go && ./bookings
