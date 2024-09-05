@@ -27,7 +27,6 @@ Thumbs.db
 # Go Modules
 go.sum
 go.mod
-run.sh
 
 # Logs
 *.log
