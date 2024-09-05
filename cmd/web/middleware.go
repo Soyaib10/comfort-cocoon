@@ -4,9 +4,9 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/justinas/nosurf"
 	"github.com/Soyaib10/comfort-cocoon/internal/helpers"
 	"github.com/Soyaib10/comfort-cocoon/internal/models"
+	"github.com/justinas/nosurf"
 )
 
 // NoSurf adds CSRF protection to all POST requests
@@ -27,9 +27,19 @@ func SessionLoad(next http.Handler) http.Handler {
 	return session.LoadAndSave(next)
 }
 
-func Auth(next http.Handler) http.Handler{
+// secureHeaders → servemux → application handler
+func secureHeaders(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if !helpers.IsAuthenticated(r){
+		w.Header().Set("X-XSS-Protection", "1; mode=block")
+		w.Header().Set("X-Frame-Options", "deny")
+
+		next.ServeHTTP(w, r)
+	})
+}
+
+func Auth(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if !helpers.IsAuthenticated(r) {
 			session.Put(r.Context(), "error", "Log in first!")
 			http.Redirect(w, r, "/user/login", http.StatusSeeOther)
 			return
@@ -39,28 +49,28 @@ func Auth(next http.Handler) http.Handler{
 }
 
 func SetUserMiddleware(next http.Handler) http.Handler {
-    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-        // Create or fetch the User object based on your authentication logic
-        // Here, we assume you have a function named "getUserFromSession" that retrieves the user from the session or authentication mechanism
-        user_information := getUserFromSession(r)
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// Create or fetch the User object based on your authentication logic
+		// Here, we assume you have a function named "getUserFromSession" that retrieves the user from the session or authentication mechanism
+		user_information := getUserFromSession(r)
 
-        // Set the User object in the request context
-        ctx := context.WithValue(r.Context(), "user_information", user_information)
-        r = r.WithContext(ctx)
+		// Set the User object in the request context
+		ctx := context.WithValue(r.Context(), "user_information", user_information)
+		r = r.WithContext(ctx)
 
 		// log.Println(ctx.Value("user_information"))
 
-        // Call the next handler in the chain
-        next.ServeHTTP(w, r)
-    })
+		// Call the next handler in the chain
+		next.ServeHTTP(w, r)
+	})
 }
 
-func getUserFromSession(r *http.Request) models.User{
+func getUserFromSession(r *http.Request) models.User {
 	var user models.User
 
 	exists := app.Session.Exists(r.Context(), "user_information")
 
-	if !exists{
+	if !exists {
 		return user
 	}
 
