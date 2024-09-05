@@ -30,43 +30,55 @@ This project is about a hotel management system, including user and admin functi
 
 ## Screenshots
 
-### 1. Registration Page
-![Registration Page]()
 
-The registration page allows new users to sign up by providing their details.
 
-### 2. Login Page
-![Login Page]()
-
-The login page where registered users can log in to access their accounts.
-
-### 3. Homepage
-![Homepage]()
+### 1. Homepage
+![Homepage](./static/images/screenshoots/homepage.png)
 
 The homepage displays an overview of available rooms and other services.
 
+### 2. Registration Page
+![Registration Page](./static/images/screenshoots/signup.png)
+
+The registration page allows new users to sign up by providing their details.
+
+### 3. Login Page
+![Login Page](./static/images/screenshoots/login.png)
+
+The login page where registered users can log in to access their accounts.
+
 ### 4. Rooms Available
-![Rooms Available]()
+![Rooms Available](./static/images/screenshoots/room_general.png)
 
 This page shows the available rooms that users can book.
 
-### 5. Room Reservation
-![Room Reservation]()
+### 5. Search Avialablity
+![Rooms Available](./static/images/screenshoots/search_avialablity.png)
+
+This page shows the available dates that users can book.
+
+### 6. Room Reservation
+![Room Reservation](./static/images/screenshoots/make_reservation.png)
 
 The room reservation page where users can select their preferred room and confirm the booking.
 
-### 6. Confirmation Page
-![Confirmation Page]()
+### 7. Reservation Summary
+![Confirmation Page](./static/images/screenshoots/reservation_summary.png)
+
+This page sums up reservation and displays the booking details.
+
+### 8. Confirmation Page
+![Confirmation Page](./static/images/screenshoots/confirmatation.png)
 
 This page confirms the user's reservation and displays the booking details.
 
-### 7. Admin Dashboard
-![Admin Dashboard]()
+### 9. Admin Dashboard
+![Admin Dashboard](./static/images/screenshoots/admin_dashboard.png)
 
 The admin dashboard where the admin can manage users, reservations, and room availability.
 
-### 8. Admin Manages
-![Admin Manages]()
+### 10. Admin Manages
+![Admin Manages](./static/images/screenshoots/managing_bookins.png)
 
 This page allows the admin to manage all the resources in the system including users and rooms.
 
