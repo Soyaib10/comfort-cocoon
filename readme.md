@@ -1,86 +1,90 @@
-**This project is about booking hotel rooms.**
-**Key features**
-For Visitors:
-    - Create account/Login
-    - Search Option
-    - Book Rooms
-    - CalendarIntegration
-    - Get confirmation
+# **Comfort Cocoon** - Hotel Room Booking System
 
-For Admin:
-    - Manage the bookings
-    - Accept or reject a bookings
+This project is a hotel room booking system designed to provide an easy interface for both visitors and admins to manage room bookings efficiently.
 
+---
 
-**Tech Stack**
-Front End:
-    - HTML, CSS, Bootstrap, JavaScript
-BackEnd:
-    - Go
-Database:
-    - MySQL
+## **Key Features**
 
+### For Visitors:
+- **Create Account/Login**: Users can create an account or log in to access the system.
+- **Search Option**: Search for available rooms by date and preferences.
+- **Book Rooms**: Easily book available rooms from the options shown.
+- **Calendar Integration**: View booking dates with calendar integration.
+- **Get Confirmation**: Get instant confirmation of the room reservation.
 
-**Limitatios:** 
-    - No transection features
+### For Admin:
+- **Manage Bookings**: Admins can view and manage all bookings.
+- **Accept or Reject Bookings**: Admins can approve or decline room booking requests.
 
-# **Demonstration:** 
+---
 
-This project is about a hotel management system, including user and admin functionalities.
+## **Tech Stack**
 
-## Screenshots
+### Frontend:
+- HTML, CSS, Bootstrap, JavaScript
 
+### Backend:
+- Go (Golang)
 
+### Database:
+- MySQL
 
-### 1. Homepage
+---
+
+## **Limitations**
+- No transaction/payment integration yet.
+
+---
+
+## **Demonstration**
+
+This project demonstrates a fully functional hotel management system with distinct functionalities for users and admins.
+
+### Screenshots
+
+#### 1. Homepage
 ![Homepage](./static/images/screenshoots/homepage.png)
+The homepage gives an overview of available rooms and other hotel services.
 
-The homepage displays an overview of available rooms and other services.
-
-### 2. Registration Page
+#### 2. Registration Page
 ![Registration Page](./static/images/screenshoots/signup.png)
+Visitors can create accounts by filling in the registration form.
 
-The registration page allows new users to sign up by providing their details.
-
-### 3. Login Page
+#### 3. Login Page
 ![Login Page](./static/images/screenshoots/login.png)
+Users can log in to manage their bookings and account details.
 
-The login page where registered users can log in to access their accounts.
-
-### 4. Rooms Available
+#### 4. Rooms Available
 ![Rooms Available](./static/images/screenshoots/room_general.png)
+Visitors can browse through available rooms to make reservations.
 
-This page shows the available rooms that users can book.
+#### 5. Search Availability
+![Search Availability](./static/images/screenshoots/search_avialablity.png)
+Search for room availability on specific dates.
 
-### 5. Search Avialablity
-![Rooms Available](./static/images/screenshoots/search_avialablity.png)
-
-This page shows the available dates that users can book.
-
-### 6. Room Reservation
+#### 6. Room Reservation
 ![Room Reservation](./static/images/screenshoots/make_reservation.png)
+The room reservation page allows users to choose their desired room and confirm the booking.
 
-The room reservation page where users can select their preferred room and confirm the booking.
+#### 7. Reservation Summary
+![Reservation Summary](./static/images/screenshoots/reservation_summary.png)
+The reservation summary page shows the user’s booking details before confirming.
 
-### 7. Reservation Summary
-![Confirmation Page](./static/images/screenshoots/reservation_summary.png)
-
-This page sums up reservation and displays the booking details.
-
-### 8. Confirmation Page
+#### 8. Confirmation Page
 ![Confirmation Page](./static/images/screenshoots/confirmatation.png)
+This page confirms that the room has been successfully reserved.
 
-This page confirms the user's reservation and displays the booking details.
-
-### 9. Admin Dashboard
+#### 9. Admin Dashboard
 ![Admin Dashboard](./static/images/screenshoots/admin_dashboard.png)
+The admin dashboard for managing users, rooms, and bookings.
 
-The admin dashboard where the admin can manage users, reservations, and room availability.
-
-### 10. Admin Manages
+#### 10. Admin Manages Bookings
 ![Admin Manages](./static/images/screenshoots/managing_bookins.png)
+Admins can manage bookings, approve or reject them, and view system resources.   
 
-This page allows the admin to manage all the resources in the system including users and rooms.
+
+
 
 
 **Download Instructions**
