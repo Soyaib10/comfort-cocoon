@@ -27,11 +27,9 @@ func ClientError(w http.ResponseWriter, status int) {
 // serverError helper writes an error message and stack trace to the errorLog then sends a generic 500 Internal Server Error response to the user.
 func ServerError(w http.ResponseWriter, err error) {
 	trace := fmt.Sprintf("%s\n%s", err.Error(), debug.Stack())
-	app.ErrorLog.Output(2, trace)
+	app.ErrorLog.Println(trace)
 	http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 }
-
-
 
 func IsAuthenticated(r *http.Request) bool{
 	exists := app.Session.Exists(r.Context(), "user_id")
