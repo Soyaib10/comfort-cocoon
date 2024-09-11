@@ -30,6 +30,12 @@ This project is a hotel room booking system designed to provide an easy interfac
 ### Database:
 - MySQL
 
+### Packages:
+- Chi Router
+- SCS Session Manager
+- Justin NoSurf Package for CSRF Protection
+
+
 ---
 
 ## **Limitations**
