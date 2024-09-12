@@ -24,9 +24,6 @@ dist/
 .DS_Store
 Thumbs.db
 
-# Go Modules
-go.sum
-go.mod
 
 # Logs
 *.log
